@@ -3,8 +3,11 @@ import { withStyles } from "@material-ui/core/styles"
 import Typography from "@material-ui/core/Typography"
 import Divider from "@material-ui/core/Divider"
 import Button from "@material-ui/core/Button"
+import Tooltip from "@material-ui/core/Tooltip";
 import Grid from "@material-ui/core/Grid"
-import WarningIcon from "@material-ui/icons/Warning"
+import TrendingUpIcon from "@material-ui/icons/TrendingUp";
+import TrendingDownIcon from "@material-ui/icons/TrendingDown";
+import TrendingFlatIcon from "@material-ui/icons/TrendingFlat";
 import Container from "@material-ui/core/Container"
 import {
   XYPlot,
@@ -51,6 +54,15 @@ const styles = theme => ({
   button: {
     margin: theme.spacing(1),
   },
+  inverted: {
+    backgroundColor: theme.palette.error.main
+  },
+  normal: {
+    backgroundColor: '#4caf50'
+  },
+  flat: {
+    backgroundColor: '#ffeb3b'
+  },
   rightIcon: {
     marginLeft: theme.spacing(1),
   },
@@ -73,13 +85,8 @@ class YieldCurve extends Component {
       hintValue: null,
     }
 
-    this.handleClick = this.handleClick.bind(this)
     this.onMouseLeave = this.onMouseLeave.bind(this)
     this.onNearestX = this.onNearestX.bind(this)
-  }
-
-  handleClick() {
-    // TODO
   }
 
   onMouseLeave() {
@@ -94,6 +101,30 @@ class YieldCurve extends Component {
   render() {
     const { hintValue, entry } = this.state
     const { classes } = this.props
+
+    const slope = entry.data.reduce((sum, val) => val.y + sum, 0) / entry.data.length;
+
+    let yieldBtn;
+    if (slope > 0.5) {
+      yieldBtn = {
+        className: classes.inverted,
+        text: 'inverted',
+        icon: (<TrendingUpIcon className={classes.rightIcon} />)
+      };
+    } else if (slope < -0.5) {
+      yieldBtn = {
+        className: classes.normal,
+        text: 'normal',
+        icon: (<TrendingDownIcon className={classes.rightIcon} />)
+      };
+    } else {
+      yieldBtn = {
+        className: classes.flat,
+        text: 'flat',
+        icon: (<TrendingFlatIcon className={classes.rightIcon} />)
+      };
+    }
+
     return (
       <Container maxWidth="xl" className={classes.container}>
         <Grid container spacing={2} className={classes.gridContainer}>
@@ -104,13 +135,15 @@ class YieldCurve extends Component {
                   Yield Curve
                 </Typography>
                 <Typography variant="subtitle2" className={classes.date}>
-                  {entry.date.toLocaleDateString()}
+                  Data From: {entry.date.toLocaleDateString()}
                 </Typography>
               </span>
-              <Button variant="contained" className={classes.button}>
-                Inverted
-                <WarningIcon className={classes.rightIcon} />
-              </Button>
+              <Tooltip title={`slope: ${slope.toFixed(2)}`}>
+                <Button variant="contained" className={classes.button + " " + yieldBtn.className} href="#types">
+                  {yieldBtn.text}
+                  {yieldBtn.icon}
+                </Button>
+              </Tooltip>
             </div>
           </Grid>
           <Grid item xs={12}>
@@ -126,13 +159,7 @@ class YieldCurve extends Component {
                 tickFormat={v => keys[v][1]}
               />
               <YAxis title="Yield" />
-              <LineSeries data={entry.data.reduce((arr, val) => {
-                if (val.x === keys.findIndex(key => key[0] === "d:BC_3MONTH") || val.x === keys.findIndex(key => key[0] === "d:BC_10YEAR")) {
-                  arr.push(val);
-                }
-                return arr;
-              }, [])} />
-              <LineSeries data={entry.data} onNearestX={this.onNearestX} />
+              <LineSeries data={entry.data} onNearestX={this.onNearestX} curve="curveMonotoneX" />
               {hintValue && (
                 <Hint value={hintValue}>
                   <div className={classes.hintContainer}>

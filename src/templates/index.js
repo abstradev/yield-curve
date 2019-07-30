@@ -96,7 +96,6 @@ class IndexPage extends Component {
     const { importantOpen, value } = this.state
     const { pageContext, classes } = this.props
     const { updated, entry } = pageContext.data.feed
-    console.log(updated) // TODO use this elsewhere
     const entries = entry.map(item => {
       const properties = item.content["m:properties"]
       const data = keys.reduce((aggr, key, index) => {
@@ -113,7 +112,7 @@ class IndexPage extends Component {
     entries.sort((a, b) => a.id - b.id)
 
     return (
-      <Layout>
+      <Layout updated={updated}>
         <Grid container spacing={8}>
           <Grid item xs={12} lg={8} id="yield-curve">
             <YieldCurve data={entries} />

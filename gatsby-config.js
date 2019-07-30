@@ -29,7 +29,7 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-s3',
       options: {
-        bucketName: 'abstra-yieldcurve',
+        bucketName: 'app-invertedyieldcurve-net',
         acl: null
       }
     },

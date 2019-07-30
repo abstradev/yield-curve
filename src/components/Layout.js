@@ -22,7 +22,17 @@ const styles = theme => ({
     color: theme.palette.common.white,
   },
   toolbar: {
+    display: 'flex',
     justifyContent: "space-between",
+    alignItems: 'center'
+  },
+  logo: {
+    display: 'flex',
+    alignItems: 'flex-end'
+  },
+  updated: {
+    paddingBottom: '8px',
+    marginLeft: '16px'
   },
   github: {
     height: "32px",
@@ -32,19 +42,24 @@ const styles = theme => ({
   },
 })
 
-const Layout = ({ classes, children }) => {
+const Layout = ({ classes, children, updated }) => {
   return (
     <React.Fragment>
       <Seo />
       <AppBar color="primary" position="static">
         <Toolbar className={classes.toolbar}>
-          <Tooltip title="Visit Website">
-            <Button href="https://abstraconsulting.com/">
-              <Typography variant="h4" className={classes.title}>
-                Abstra
-              </Typography>
-            </Button>
-          </Tooltip>
+          <div className={classes.logo}>
+            <Tooltip title="Visit Website">
+              <Button href="https://abstraconsulting.com/">
+                <Typography variant="h4" className={classes.title}>
+                  Abstra
+                </Typography>
+              </Button>
+            </Tooltip>
+            <Typography variant="subtitle2" className={classes.updated}>
+                Last Updated: {(new Date(updated)).toLocaleDateString()}
+            </Typography>
+          </div>
           <div>
             <Button href="https://github.com/abstra-llc/yield-curve">
               <img
