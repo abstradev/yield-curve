@@ -1,0 +1,57 @@
+{
+  "name": "yieldcurve",
+  "private": true,
+  "description": "Yield Curve",
+  "version": "0.1.0",
+  "author": "Abstra LLC",
+  "dependencies": {
+    "@material-ui/core": "^4.2.1",
+    "@material-ui/icons": "^4.2.1",
+    "@material-ui/styles": "4.2.1",
+    "fast-xml-parser": "^3.12.17",
+    "gatsby": "^2.13.34",
+    "gatsby-image": "^2.2.6",
+    "gatsby-plugin-google-analytics": "^2.1.5",
+    "gatsby-plugin-manifest": "^2.2.4",
+    "gatsby-plugin-material-ui": "^2.1.4",
+    "gatsby-plugin-offline": "^2.2.4",
+    "gatsby-plugin-react-helmet": "^3.1.2",
+    "gatsby-plugin-remove-serviceworker": "^1.0.0",
+    "gatsby-plugin-s3": "^0.3.1",
+    "gatsby-plugin-sharp": "^2.2.9",
+    "gatsby-source-filesystem": "^2.1.6",
+    "gatsby-transformer-sharp": "^2.2.4",
+    "node-fetch": "^2.6.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-helmet": "^5.2.1",
+    "react-vis": "^1.11.7"
+  },
+  "devDependencies": {
+    "prettier": "^1.18.2"
+  },
+  "keywords": [
+    "gatsby",
+    "material-ui",
+    "react",
+    "yield",
+    "curve"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "deploy": "gatsby-plugin-s3 deploy",
+    "format": "prettier --write src/**/*.{js,jsx}",
+    "start": "npm run develop",
+    "serve": "gatsby serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/abstra-llc/yield-curve"
+  },
+  "bugs": {
+    "url": "https://github.com/abstra-llc/yield-curve/issues"
+  }
+}
