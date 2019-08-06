@@ -35,12 +35,22 @@ const styles = theme => ({
     alignItems: "center",
     flexWrap: "wrap",
   },
+  titleTextContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "flex-end",
+    flexWrap: "wrap",
+  },
   title: {
     display: 'inline'
   },
   date: {
     display: 'inline',
-    marginLeft: '1rem'
+    [theme.breakpoints.down('xs')]: {
+      marginLeft: '0.5rem'
+    },
+    marginLeft: '1rem',
+    whiteSpace: 'nowrap'
   },
   plot: {
     padding: "16px",
@@ -130,7 +140,7 @@ class YieldCurve extends Component {
         <Grid container spacing={2} className={classes.gridContainer}>
           <Grid item xs={12}>
             <div className={classes.titleContainer}>
-              <span>
+              <span className={classes.titleTextContainer}>
                 <Typography component="h1" variant="h3" className={classes.title}>
                   Yield Curve
                 </Typography>
